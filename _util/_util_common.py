@@ -21,7 +21,7 @@ def sq_whitespace(input_string: str) -> str:
     return input_string.replace(" ", "-")
 
 
-def get_random_string(string_length: int) -> str:
+def get_random_string(string_length: int = 16) -> str:
     return uuid.uuid4().hex[:string_length]
 
 

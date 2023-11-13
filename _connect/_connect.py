@@ -20,6 +20,9 @@ from _aws import awscloudwatch
 from _aws import awscloudwatchlog
 from _aws import awsasg
 from _aws import awstextract
+from _aws import awskms
+from _aws import awsrds
+from _aws import awssecretmanager
 
 
 RT = TypeVar("RT")
