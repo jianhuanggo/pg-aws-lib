@@ -35,6 +35,60 @@ def order_of_events(logger: Log = None) -> None:
     # test_rds.create_kms_credential()
     # exit(0)
 
+    _object_ec2 = _connect_.get_object("awsec2")
+    print(_object_ec2)
+    exit(0)
+
+    # _object_ssm = _connect_.get_object("secretmanager")
+    # _rds_parameters = {"username": "eds_integration",
+    #                    "password": "readonlypw123",
+    #                    "engine": "aurora-mysql",
+    #                    "host": "rds-prod.cluster-ctifvwqkkvpj.us-east-1.rds.amazonaws.com",
+    #                    "port": "3306",
+    #                    "dbClusterIdentifier": "rds-prod"}
+    #
+    # x = _object_ssm.create_secret_value(secret_name="st_rds_passwd_4_eds_integration_prod",
+    #                                     secret_string=_rds_parameters,
+    #                                     secret_template="rds_credential_template"
+    #                                     )
+    #
+    # print(x)
+    # exit(0)
+
+    # _object_ssm = _connect_.get_object("secretmanager")
+    # _rds_parameters = {"username": "eds_integration",
+    #                    "password": "readonlypw123",
+    #                    "engine": "aurora-mysql",
+    #                    "host": "rds-test.cluster-cphyilb82quc.us-east-1.rds.amazonaws.com",
+    #                    "port": "3306",
+    #                    "dbClusterIdentifier": "rds-test"}
+    #
+    # x = _object_ssm.create_secret_value(secret_name="st_rds_passwd_4_eds_integration_test",
+    #                                     secret_string=_rds_parameters,
+    #                                     secret_template="rds_credential_template"
+    #                                 )
+    #
+    #
+    #
+    # print(x)
+    # exit(0)
+
+    _object_ssm = _connect_.get_object("secretmanager")
+    _rds_parameters = {"username": "eds_integration",
+                       "password": "readonlypw123",
+                       "engine": "aurora-mysql",
+                       "host": "rds-dev.cluster-chj8tcsljeuc.us-east-1.rds.amazonaws.com",
+                       "port": "3306",
+                       "dbClusterIdentifier": "rds-dev"}
+
+    x = _object_ssm.create_secret_value(secret_name="st_rds_passwd_4_eds_integration_dev",
+                                        secret_string=_rds_parameters,
+                                        secret_template="rds_credential_template"
+                                    )
+
+    print(x)
+    exit(0)
+
 
     _object_ec2 = _connect_.get_object("awsec2")
     _image_name = f"gttracs-test-bastion-{uuid.uuid4().hex[:8]}"

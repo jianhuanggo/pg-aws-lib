@@ -1,4 +1,4 @@
-aws_profile_name: gttracs-test
+aws_profile_name: gttracs-dev
 aws_region_name: us-east-1
 aws_access_key_id:
 aws_secret_access_key:
