@@ -10,6 +10,7 @@ from _common import _common as _common_
 from _aws import awsclient_config as _aws_config_
 from _util import _util_common as _util_
 from pprint import pprint
+from botocore.exceptions import ClientError
 
 
 class AwsApiAWSS3(metaclass=_meta_.Meta):
@@ -307,8 +308,9 @@ class AwsApiAWSS3(metaclass=_meta_.Meta):
         """
         _bucket_name = f"{bucket_name}-{str(random.randint(1000, 9999))}"
         _parameters = {"Bucket": _bucket_name} if suffix_flg else {"Bucket": bucket_name}
-        _parameters = {**_parameters, **{"CreateBucketConfiguration":
-                                             {"LocationConstraint": self._config.config.get("aws_region_name")}}}
+        if self._config.config.get("aws_region_name") != "us-east-1":
+            _parameters = {**_parameters, **{"CreateBucketConfiguration":
+                                                 {"LocationConstraint": self._config.config.get("aws_region_name")}}}
 
         # print(_parameters)
 
@@ -557,6 +559,54 @@ class AwsApiAWSS3(metaclass=_meta_.Meta):
                                  logger=logger,
                                  mode="error",
                                  ignore_flag=False)
+        from botocore.exceptions import ClientError
+
+    def create_presigned_url(self, s3_filepath: str, expiration=3600, logger: Log = None):
+        """Generate a presigned URL to share an S3 object
+        # :param bucket_name: string
+        # :param expiration: Time in seconds for the presigned URL to remain valid
+        # :return: Presigned URL as string. If error, returns None.
+
+        Args:
+            s3_filepath:
+
+        """
+        # Generate a presigned URL for the S3 object
+        _dirpath = s3_filepath[len("s3://"):] if s3_filepath.startswith("s3://") else s3_filepath
+        _directory = _dirpath.split("/")
+
+        if len(_directory) == 0:
+            _common_.error_logger(currentframe().f_code.co_name,
+                                  f"{s3_filepath} is not a valid s3 path",
+                                  logger=logger,
+                                  mode="error",
+                                  ignore_flag=False)
+
+        _bucket_name = _directory[0]
+        _bucket_key = "/".join(_directory[1:])
+        _parameters = {
+            "Params": {
+                "Bucket": _bucket_name,
+                "Key": _bucket_key
+            },
+            "ExpiresIn": expiration
+        }
+        # s3_client = boto3.client('s3')
+        try:
+            _response = self._client.generate_presigned_url("get_object", **_parameters)
+            # response = s3_client.generate_presigned_url('get_object',
+            #                                             Params={'Bucket': bucket_name,
+            #                                                     'Key': object_name},
+            #                                             ExpiresIn=expiration)
+            return _response
+        except ClientError as err:
+            _common_.error_logger(currentframe().f_code.co_name,
+                                  err,
+                                  logger=logger,
+                                  mode="error",
+                                  ignore_flag=False)
+
+
 
 
 
