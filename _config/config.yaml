@@ -1,4 +1,4 @@
-aws_profile_name: normal
+aws_profile_name: aws_default
 aws_region_name: us-east-1
 aws_access_key_id:
 aws_secret_access_key:
