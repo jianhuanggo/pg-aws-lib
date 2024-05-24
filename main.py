@@ -1,33 +1,10 @@
-from _event import _event as _event_
-
-"""
-pip install poetry
-poetry init
-
-poetry add pyyaml
-poetry add boto3
-poetry add pandas
-poetry add pygithub
-
-pip install pyyaml
-pip install boto3
-pip install pandas
-pip install pygithub
-
-"""
-from task.s3 import add_s3_bucket
-from task.s3 import upload_file_s3
-from task.s3 import create_presign_url
+from _connect import _connect as _connect_
 
 
-def main():
-    # add_s3_bucket.add_s3_bucket("pg-share-out-001")
-    # upload_file_s3.s3_upload_file("/Users/jianhuang/Downloads/jianhuang_picture.jpg", "s3://pg-share-out-001")
-
-    # _event_.order_of_events()
-
-    print(create_presign_url.s3_upload_file("s3://pg-share-out-001/jianhuang_picture.jpg", expiration=604800))
+def example():
+    _object_s3 = _connect_.get_object("awss3")
+    print(_object_s3.create_presigned_url("s3://pg-share-out-001/aws.jpg", expiration=604800))
 
 
 if __name__ == '__main__':
-    main()
+    example()
