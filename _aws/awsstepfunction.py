@@ -12,8 +12,8 @@ from pprint import pprint
 
 
 class AwsApiAWSstepfunction(metaclass=_meta_.Meta):
-    def __init__(self, config: _config_.AwsApiConfigSingleton = None, logger: Log = None):
-        self._config = config if config else _config_.AwsApiConfigSingleton()
+    def __init__(self, config: _config_.ConfigSingleton = None, logger: Log = None):
+        self._config = config if config else _config_.ConfigSingleton()
         self._session = _aws_config_.setup_session(self._config)
         self._client = self._session.client("stepfunctions")
 

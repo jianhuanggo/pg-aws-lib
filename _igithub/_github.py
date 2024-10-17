@@ -11,8 +11,8 @@ from _config import config as _config_
 
 
 class AwsApiGithub(metaclass=_meta_.Meta):
-    def __init__(self, config: _config_.AwsApiConfigSingleton = None, logger: Log = None):
-        self._config = config if config else _config_.AwsApiConfigSingleton()
+    def __init__(self, config: _config_.ConfigSingleton = None, logger: Log = None):
+        self._config = config if config else _config_.ConfigSingleton()
         self._token = base64.b64decode(self._config.config.get("git_token", "")).decode("UTF-8")
 
         if not self._token:

@@ -6,7 +6,8 @@ from _common import _common as _common_
 from pathlib import Path
 
 
-def identity_create_directory(dirpath: str, logger: Log = None) -> bool:
+@_common_.exception_handler
+def create_directory(dirpath: str, logger: Log = None) -> bool:
     try:
         o_umask = os.umask(0)
         os.makedirs(dirpath)
@@ -33,8 +34,8 @@ def identity_create_directory(dirpath: str, logger: Log = None) -> bool:
 
     return True
 
-
-def identity_remove_directory(dirpath: str, logger: Log = None) -> bool:
+@_common_.exception_handler
+def remove_directory(dirpath: str, logger: Log = None) -> bool:
     try:
         shutil.rmtree(dirpath)
         return True
@@ -45,6 +46,7 @@ def identity_remove_directory(dirpath: str, logger: Log = None) -> bool:
                              mode="error",
                              ignore_flag=True)
 
-
-def identity_is_dir_exist(dirpath: str, logger: Log = None) -> bool:
+@_common_.exception_handler
+def is_dir_exist(dirpath: str, logger: Log = None) -> bool:
     return Path(dirpath).is_dir()
+

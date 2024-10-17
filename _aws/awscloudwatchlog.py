@@ -9,8 +9,8 @@ from _common import _common
 
 
 class AwsApiAWSCloudWatchLog(metaclass=_meta_.Meta):
-    def __init__(self, config: _config_.AwsApiConfigSingleton = None, logger: Log = None):
-        self._config = config if config else _config_.AwsApiConfigSingleton()
+    def __init__(self, config: _config_.ConfigSingleton = None, logger: Log = None):
+        self._config = config if config else _config_.ConfigSingleton()
 
         self._session = _aws_config_.setup_session_by_profile(self._config.config.get("aws_profile_name"), self._config.config.get("aws_region_name")) if \
             self._config.config.get("aws_profile_name") and self._config.config.get("aws_region_name") else _aws_config_.setup_session(self._config)

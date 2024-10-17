@@ -170,6 +170,18 @@ def json_to_csv(filepath: str, data: Union[List, Dict], header: List = [], logge
             writer.writerow(row)
 
 
+def detect_path_type(filepath: str) -> str:
+    from urllib.parse import urlparse
+
+    parsed = urlparse(filepath)
+    if parsed.scheme in ("http", "https"):
+        return "URL"
+    elif is_file_exist(filepath):
+        return "FILE"
+    else:
+        return "UNKNOWN"
+
+
 
 
 # def pghtml_to_jira_wiki(filepath: str, logger: Log = None) -> str:
